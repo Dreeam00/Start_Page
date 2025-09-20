@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             expires = "; expires=" + date.toUTCString();
         }
         const encodedValue = encodeURIComponent(value || "");
-        document.cookie = name + "=" + encodedValue + expires;
+        document.cookie = name + "=" + encodedValue + expires + "; path=/; Secure; SameSite=Lax";
     }
 
     function getCookie(name) {
