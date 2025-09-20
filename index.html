@@ -104,5 +104,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Link Dialog -->
+    <div id="edit-link-dialog-overlay" class="hidden">
+        <div id="edit-link-dialog" class="glass-card">
+            <h3>Edit Link</h3>
+            <form id="edit-link-form">
+                <input type="hidden" id="edit-link-index">
+                <div class="setting-item">
+                    <label for="edit-link-name-input">Name</label>
+                    <input type="text" id="edit-link-name-input" required>
+                </div>
+                <div class="setting-item">
+                    <label for="edit-link-url-input">URL</label>
+                    <input type="text" id="edit-link-url-input" required>
+                </div>
+                <div class="setting-item">
+                    <label for="edit-link-icon-input">Icon URL</label>
+                    <input type="text" id="edit-link-icon-input">
+                </div>
+                <div id="dialog-buttons">
+                    <button type="submit" id="edit-link-confirm">Save</button>
+                    <button type="button" id="edit-link-cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

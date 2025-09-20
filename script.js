@@ -25,6 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const dialogConfirmBtn = document.getElementById('dialog-confirm');
     const dialogCancelBtn = document.getElementById('dialog-cancel');
     const notesTextarea = document.getElementById('notes-textarea');
+    const editLinkDialogOverlay = document.getElementById('edit-link-dialog-overlay');
+    const editLinkForm = document.getElementById('edit-link-form');
+    const editLinkIndexInput = document.getElementById('edit-link-index');
+    const editLinkNameInput = document.getElementById('edit-link-name-input');
+    const editLinkUrlInput = document.getElementById('edit-link-url-input');
+    const editLinkIconInput = document.getElementById('edit-link-icon-input');
+    const editLinkCancelBtn = document.getElementById('edit-link-cancel');
 
     // --- State & Constants ---
     let links = [];
@@ -191,6 +198,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === dialogOverlay) hideConfirm(false);
     });
 
+    function showEditLinkDialog(index) {
+        const link = links[index];
+        editLinkIndexInput.value = index;
+        editLinkNameInput.value = link.name;
+        editLinkUrlInput.value = link.url;
+        editLinkIconInput.value = link.icon;
+        editLinkDialogOverlay.classList.remove('hidden');
+    }
+
+    function hideEditLinkDialog() {
+        editLinkDialogOverlay.classList.add('hidden');
+    }
+
     // --- Rendering ---
     function getIconUrl(link) {
         if (link.icon) {
@@ -229,6 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
             item.innerHTML = `
                 <img src="${getIconUrl(link)}" alt="">
                 <span>${link.name}</span>
+                <button class="icon-btn edit-link-btn" data-index="${index}">
+                    <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.37-1.02-.37-1.41 0l-1.83 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>
+                </button>
                 <button class="icon-btn delete-link-btn" data-index="${index}">
                     <svg width="20" height="20" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 15L33 33m0-18L15 33"/></svg>
                 </button>
@@ -391,7 +414,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderManageLinks();
             }
         }
+
+        const editBtn = e.target.closest('.edit-link-btn');
+        if (editBtn) {
+            const index = parseInt(editBtn.dataset.index, 10);
+            showEditLinkDialog(index);
+        }
     });
+
+    editLinkForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const index = parseInt(editLinkIndexInput.value, 10);
+        const name = editLinkNameInput.value.trim();
+        let url = editLinkUrlInput.value.trim();
+        const icon = editLinkIconInput.value.trim();
+
+        if (name && url) {
+            if (!url.startsWith('http')) url = 'https://' + url;
+            links[index] = { name, url, icon };
+            saveLinks();
+            renderLinks();
+            renderManageLinks();
+            hideEditLinkDialog();
+        }
+    });
+
+    editLinkCancelBtn.addEventListener('click', hideEditLinkDialog);
 
     notesTextarea.addEventListener('input', () => {
         notes = notesTextarea.value;
