@@ -49,34 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // --- Core Functions ---
-    function setCookie(name, value, days) {
-        let expires = "";
-        if (days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        const encodedValue = encodeURIComponent(value || "");
-        document.cookie = name + "=" + encodedValue + expires + "; path=/; Secure; SameSite=Lax";
-    }
-
-    function getCookie(name) {
-        const nameEQ = name + "=";
-        const ca = document.cookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) === 0) {
-                const encodedValue = c.substring(nameEQ.length, c.length);
-                const decodedValue = decodeURIComponent(encodedValue);
-                return decodedValue;
-            }
-        }
-        return null;
-    }
-
     function saveSettings() {
-        setCookie('startPageSettings', JSON.stringify(settings), 365);
+        localStorage.setItem('startPageSettings', JSON.stringify(settings));
     }
 
     function applySettings() {
@@ -95,15 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function saveLinks() {
-        setCookie('startPageLinks', JSON.stringify(links), 365);
+        localStorage.setItem('startPageLinks', JSON.stringify(links));
     }
 
     function loadData() {
-        const storedSettings = getCookie('startPageSettings');
+        const storedSettings = localStorage.getItem('startPageSettings');
         if (storedSettings) {
             Object.assign(settings, JSON.parse(storedSettings));
         }
-        const storedLinks = getCookie('startPageLinks');
+        const storedLinks = localStorage.getItem('startPageLinks');
         links = storedLinks ? JSON.parse(storedLinks) : [...defaultLinks];
         // Ensure old data structure is compatible
         links.forEach(link => {
