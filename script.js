@@ -99,14 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadData() {
-        console.log("Loading data from cookies...");
         const storedSettings = getCookie('startPageSettings');
-        console.log("Stored settings:", storedSettings);
         if (storedSettings) {
             Object.assign(settings, JSON.parse(storedSettings));
         }
         const storedLinks = getCookie('startPageLinks');
-        console.log("Stored links:", storedLinks);
         links = storedLinks ? JSON.parse(storedLinks) : [...defaultLinks];
         // Ensure old data structure is compatible
         links.forEach(link => {
