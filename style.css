@@ -5,27 +5,27 @@
 :root {
     --bg-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2400&auto=format&fit=crop');
     --blur: 10px;
-    --opacity: 0.1;
+    --opacity: 0.2;
 
     --theme-transition: background 0.5s ease, color 0.5s ease;
 }
 
 body[data-theme='dark'] {
-    --glass-bg: rgba(0, 0, 0, var(--opacity));
-    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-bg: rgba(0, 0, 0, 0.3);
+    --glass-border: rgba(255, 255, 255, 0.2);
     --text-primary: #ffffff;
     --text-secondary: #b3b3b3;
-    --shadow-color: rgba(0, 0, 0, 0.2);
+    --shadow-color: rgba(0, 0, 0, 0.3);
     --highlight-bg: rgba(255, 255, 255, 0.1);
     --highlight-strong-bg: rgba(255, 255, 255, 0.2);
 }
 
 body[data-theme='light'] {
-    --glass-bg: rgba(255, 255, 255, var(--opacity));
-    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-bg: rgba(255, 255, 255, 0.3);
+    --glass-border: rgba(255, 255, 255, 0.4);
     --text-primary: #121212;
     --text-secondary: #333333;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.15);
     --highlight-bg: rgba(0, 0, 0, 0.05);
     --highlight-strong-bg: rgba(0, 0, 0, 0.1);
 }
@@ -49,7 +49,7 @@ body {
 }
 
 .glass-card {
-    background: var(--glass-bg);
+    background: linear-gradient(135deg, var(--glass-bg), transparent);
     backdrop-filter: blur(var(--blur));
     -webkit-backdrop-filter: blur(var(--blur));
     border: 1px solid var(--glass-border);
@@ -64,15 +64,9 @@ body {
     width: 100%;
     max-width: 800px;
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    text-align: center;
-}
-
-.widget-group {
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
+    text-align: center;
 }
 
 /* WIDGETS: GREETING, WEATHER, CLOCK */
@@ -96,8 +90,32 @@ body {
 /* LINKS */
 #links-container { padding-bottom: 1rem; }
 #links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; }
-.link-item { position: relative; background: var(--highlight-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem 0.5rem; border-radius: 12px; text-decoration: none; color: var(--text-primary); font-weight: 300; font-size: 0.85rem; transition: background 0.3s ease; overflow: hidden; }
-.link-item:hover { background: var(--highlight-strong-bg); }
+.link-item {
+    position: relative;
+    background: linear-gradient(135deg, var(--highlight-bg), transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 15px 0 var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 300;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+.link-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 32px 0 var(--shadow-color);
+    background: var(--highlight-strong-bg);
+}
 .link-favicon { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
 .link-name { width: 100%; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; padding: 0 5px; }
 

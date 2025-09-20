@@ -18,25 +18,21 @@
     </button>
 
     <!-- Main Content -->
-    <main class="container">
-        <div class="widget-group">
-            <div id="greeting-weather" class="glass-card">
-                <div id="greeting"></div>
-                <div id="weather">
-                    <span id="weather-temp">--°</span>
-                    <span id="weather-desc">Loading...</span>
-                </div>
+    <main class="container" id="widget-container">
+        <div id="greeting-weather" class="glass-card">
+            <div id="greeting"></div>
+            <div id="weather">
+                <span id="weather-temp">--°</span>
+                <span id="weather-desc">Loading...</span>
             </div>
-            <div id="clock" class="glass-card"></div>
         </div>
-        
+        <div id="clock" class="glass-card"></div>
         <form id="search-form" class="glass-card">
             <input type="text" id="search-input" placeholder="Search the web" autofocus>
             <button type="submit" class="icon-btn">
                 <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 38C30.3888 38 38 30.3888 38 21C38 11.6112 30.3888 4 21 4C11.6112 4 4 11.6112 4 21C4 30.3888 11.6112 38 21 38Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M33.2216 33.2217L41.7069 41.707" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
         </form>
-
         <div id="links-container" class="glass-card">
             <div id="links-grid"></div>
         </div>

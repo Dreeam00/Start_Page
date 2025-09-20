@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- State & Constants ---
     let links = [];
+    let widgetOrder = [];
     const settings = {
         theme: 'dark',
         searchEngine: 'google',
@@ -64,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bgUrlInput.value = settings.backgroundUrl;
         document.documentElement.style.setProperty('--blur', `${settings.blur}px`);
         blurInput.value = settings.blur;
-        document.documentElement.style.setProperty('--opacity', settings.opacity);
+        document.documentElement.style.setProperty('--opacity', `${settings.opacity}px`);
         opacityInput.value = settings.opacity;
     }
 
@@ -79,6 +80,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const storedLinks = localStorage.getItem('startPageLinks');
         links = storedLinks ? JSON.parse(storedLinks) : [...defaultLinks];
+        
+        const storedWidgetOrder = localStorage.getItem('startPageWidgetOrder');
+        if (storedWidgetOrder) {
+            widgetOrder = JSON.parse(storedWidgetOrder);
+            const widgetContainer = document.getElementById('widget-container');
+            widgetOrder.forEach(widgetId => {
+                const widget = document.getElementById(widgetId);
+                if (widget) {
+                    widgetContainer.appendChild(widget);
+                }
+            });
+        }
+
         // Ensure old data structure is compatible
         links.forEach(link => {
             if (link.icon === undefined) {
@@ -116,6 +130,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 links.splice(evt.newIndex, 0, movedItem);
                 saveLinks();
                 renderLinks(); // Re-render main grid to reflect new order
+            },
+        });
+
+        const widgetContainer = document.getElementById('widget-container');
+        new Sortable(widgetContainer, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            dragClass: 'sortable-drag',
+            onEnd: () => {
+                widgetOrder = [...widgetContainer.children].map(el => el.id);
+                localStorage.setItem('startPageWidgetOrder', JSON.stringify(widgetOrder));
             },
         });
     }
