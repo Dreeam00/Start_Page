@@ -50,26 +50,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Core Functions ---
     function setCookie(name, value, days) {
-        console.log("Setting cookie:", name, value);
         let expires = "";
         if (days) {
             const date = new Date();
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = "; expires=" + date.toUTCString();
         }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+        const encodedValue = encodeURIComponent(value || "");
+        document.cookie = name + "=" + encodedValue + expires + "; path=/; SameSite=Lax";
     }
 
     function getCookie(name) {
-        console.log("Getting cookie:", name);
         const nameEQ = name + "=";
         const ca = document.cookie.split(';');
         for (let i = 0; i < ca.length; i++) {
             let c = ca[i];
             while (c.charAt(0) === ' ') c = c.substring(1, c.length);
             if (c.indexOf(nameEQ) === 0) {
-                console.log("Cookie value:", c.substring(nameEQ.length, c.length));
-                return c.substring(nameEQ.length, c.length);
+                const encodedValue = c.substring(nameEQ.length, c.length);
+                const decodedValue = decodeURIComponent(encodedValue);
+                return decodedValue;
             }
         }
         return null;
