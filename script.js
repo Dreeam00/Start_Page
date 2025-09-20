@@ -24,10 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const dialogMessage = document.getElementById('dialog-message');
     const dialogConfirmBtn = document.getElementById('dialog-confirm');
     const dialogCancelBtn = document.getElementById('dialog-cancel');
+    const notesTextarea = document.getElementById('notes-textarea');
 
     // --- State & Constants ---
     let links = [];
     let widgetOrder = [];
+    let notes = '';
     const settings = {
         theme: 'dark',
         searchEngine: 'google',
@@ -73,6 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('startPageLinks', JSON.stringify(links));
     }
 
+    function saveNotes() {
+        localStorage.setItem('startPageNotes', notes);
+    }
+
     function loadData() {
         const storedSettings = localStorage.getItem('startPageSettings');
         if (storedSettings) {
@@ -80,6 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const storedLinks = localStorage.getItem('startPageLinks');
         links = storedLinks ? JSON.parse(storedLinks) : [...defaultLinks];
+
+        const storedNotes = localStorage.getItem('startPageNotes');
+        if (storedNotes) {
+            notes = storedNotes;
+            document.getElementById('notes-textarea').value = notes;
+        }
         
         const storedWidgetOrder = localStorage.getItem('startPageWidgetOrder');
         if (storedWidgetOrder) {
@@ -379,6 +391,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderManageLinks();
             }
         }
+    });
+
+    notesTextarea.addEventListener('input', () => {
+        notes = notesTextarea.value;
+        saveNotes();
     });
 
     // --- Initialization ---

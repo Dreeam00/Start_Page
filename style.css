@@ -303,3 +303,20 @@ input[type="range"]:hover::-moz-range-thumb {
 .hidden {
     display: none;
 }
+
+#notes-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#notes-textarea {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    resize: none;
+    padding: 0.5rem;
+}
