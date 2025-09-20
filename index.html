@@ -18,27 +18,27 @@
     </button>
 
     <!-- Main Content -->
-    <main class="container" id="widget-container">
-        <div id="greeting-weather" class="glass-card">
-            <div id="greeting"></div>
-            <div id="weather">
-                <span id="weather-temp">--°</span>
-                <span id="weather-desc">Loading...</span>
+    <main class="container">
+        <div class="widget-group">
+            <div id="greeting-weather" class="glass-card">
+                <div id="greeting"></div>
+                <div id="weather">
+                    <span id="weather-temp">--°</span>
+                    <span id="weather-desc">Loading...</span>
+                </div>
             </div>
+            <div id="clock" class="glass-card"></div>
         </div>
-        <div id="clock" class="glass-card"></div>
+        
         <form id="search-form" class="glass-card">
             <input type="text" id="search-input" placeholder="Search the web" autofocus>
             <button type="submit" class="icon-btn">
                 <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 38C30.3888 38 38 30.3888 38 21C38 11.6112 30.3888 4 21 4C11.6112 4 4 11.6112 4 21C4 30.3888 11.6112 38 21 38Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M33.2216 33.2217L41.7069 41.707" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
         </form>
+
         <div id="links-container" class="glass-card">
             <div id="links-grid"></div>
-        </div>
-        <div id="notes-container" class="glass-card">
-            <h3>Notes</h3>
-            <textarea id="notes-textarea"></textarea>
         </div>
     </main>
 
@@ -102,32 +102,6 @@
                 <button id="dialog-confirm">Confirm</button>
                 <button id="dialog-cancel">Cancel</button>
             </div>
-        </div>
-    </div>
-
-    <!-- Edit Link Dialog -->
-    <div id="edit-link-dialog-overlay" class="hidden">
-        <div id="edit-link-dialog" class="glass-card">
-            <h3>Edit Link</h3>
-            <form id="edit-link-form">
-                <input type="hidden" id="edit-link-index">
-                <div class="setting-item">
-                    <label for="edit-link-name-input">Name</label>
-                    <input type="text" id="edit-link-name-input" required>
-                </div>
-                <div class="setting-item">
-                    <label for="edit-link-url-input">URL</label>
-                    <input type="text" id="edit-link-url-input" required>
-                </div>
-                <div class="setting-item">
-                    <label for="edit-link-icon-input">Icon URL</label>
-                    <input type="text" id="edit-link-icon-input">
-                </div>
-                <div id="dialog-buttons">
-                    <button type="submit" id="edit-link-confirm">Save</button>
-                    <button type="button" id="edit-link-cancel">Cancel</button>
-                </div>
-            </form>
         </div>
     </div>
 </body>
