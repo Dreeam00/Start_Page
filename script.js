@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addLinkForm = document.getElementById('add-link-form');
     const linkNameInput = document.getElementById('link-name-input');
     const linkUrlInput = document.getElementById('link-url-input');
+    const linkIconInput = document.getElementById('link-icon-input');
     const manageLinksList = document.getElementById('manage-links-list');
     const dialogOverlay = document.getElementById('custom-dialog-overlay');
     const dialogMessage = document.getElementById('dialog-message');
@@ -42,9 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const defaultLinks = [
-        { name: 'Gmail', url: 'https://mail.google.com' },
-        { name: 'GitHub', url: 'https://github.com' },
-        { name: 'YouTube', url: 'https://youtube.com' },
+        { name: 'Gmail', url: 'https://mail.google.com', icon: '' },
+        { name: 'GitHub', url: 'https://github.com', icon: '' },
+        { name: 'YouTube', url: 'https://youtube.com', icon: '' },
     ];
 
     // --- Core Functions ---
@@ -78,6 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const storedLinks = localStorage.getItem('startPageLinks');
         links = storedLinks ? JSON.parse(storedLinks) : [...defaultLinks];
+        // Ensure old data structure is compatible
+        links.forEach(link => {
+            if (link.icon === undefined) {
+                link.icon = '';
+            }
+        });
         applySettings();
         renderLinks();
         renderManageLinks();
@@ -148,9 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Rendering ---
-    function getFaviconUrl(url) {
+    function getIconUrl(link) {
+        if (link.icon) {
+            return link.icon;
+        }
         try {
-            const domain = new URL(url).hostname;
+            const domain = new URL(link.url).hostname;
             return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
         } catch (e) {
             return 'https://raw.githubusercontent.com/icons8/liquid-glass-icons/main/flat-windows-11/SVG/link.svg';
@@ -166,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             linkItem.target = '_blank';
             linkItem.rel = 'noopener noreferrer';
             linkItem.innerHTML = `
-                <img src="${getFaviconUrl(link.url)}" alt="${link.name} Favicon" class="link-favicon">
+                <img src="${getIconUrl(link)}" alt="${link.name} Favicon" class="link-favicon">
                 <span class="link-name">${link.name}</span>
             `;
             linksGrid.appendChild(linkItem);
@@ -180,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             item.className = 'manage-link-item';
             item.dataset.id = index;
             item.innerHTML = `
-                <img src="${getFaviconUrl(link.url)}" alt="">
+                <img src="${getIconUrl(link)}" alt="">
                 <span>${link.name}</span>
                 <button class="icon-btn delete-link-btn" data-index="${index}">
                     <svg width="20" height="20" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 15L33 33m0-18L15 33"/></svg>
@@ -320,9 +330,10 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const name = linkNameInput.value.trim();
         let url = linkUrlInput.value.trim();
+        const icon = linkIconInput.value.trim();
         if (name && url) {
             if (!url.startsWith('http')) url = 'https://' + url;
-            links.push({ name, url });
+            links.push({ name, url, icon });
             saveLinks();
             renderLinks();
             renderManageLinks();
